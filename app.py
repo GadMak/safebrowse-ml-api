@@ -2,11 +2,13 @@ from flask import Flask, request, jsonify
 import pickle
 import numpy as np
 from feature import FeatureExtraction
+import os
 
 app = Flask(__name__)
 
-# Charger le modèle
-with open('pickle/model.pkl', 'rb') as file:
+# Charger le modèle ML (chemin relatif depuis la racine du projet)
+MODEL_PATH = os.path.join(os.path.dirname(__file__), 'pickle', 'model.pkl')
+with open(MODEL_PATH, 'rb') as file:
     gbc = pickle.load(file)
 
 @app.route('/')
@@ -36,4 +38,5 @@ def predict():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 10000))  # Port dynamique pour Render
+    app.run(host="0.0.0.0", port=port, debug=False)
