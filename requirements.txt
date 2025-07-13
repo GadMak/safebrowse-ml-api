@@ -5,6 +5,6 @@ numpy>=1.23
 pandas
 python-dateutil
 requests
-scikit-learn
+scikit-learn==1.0.1
 whois
 gunicorn
